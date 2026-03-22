@@ -1,0 +1,7 @@
+{
+  "weights": {
+    "gemini": 0.45,
+    "gpt": 0.55
+  },
+  "history": []
+}
