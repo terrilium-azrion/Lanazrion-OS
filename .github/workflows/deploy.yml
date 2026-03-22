@@ -1,0 +1,22 @@
+name: Deploy Vantablack OS
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Inject API Key
+        run: |
+          # On remplace le mot "insert" par la vraie clé stockée dans les secrets
+          sed -i 's/insert/${{ secrets.GEMINI_API_KEY }}/g' index.html
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: . # Le dossier à publier
+          branch: gh-pages # La branche qui hébergera le site public
