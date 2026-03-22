@@ -23,9 +23,10 @@
         .chat-body::-webkit-scrollbar { width: 4px; }
         .chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
-        .bubble { padding: 0.85rem 1.1rem; border-radius: 1.2rem; font-size: 13px; max-width: 85%; line-height: 1.5; }
+        .bubble { padding: 0.85rem 1.1rem; border-radius: 1.2rem; font-size: 13px; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
         .bubble.bot { background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(33, 150, 243, 0.2)); border: 1px solid rgba(255, 255, 255, 0.1); align-self: flex-start; border-bottom-left-radius: 0.2rem; }
         .bubble.user { background: rgba(255, 255, 255, 0.08); align-self: flex-end; border-bottom-right-radius: 0.2rem; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .bubble.error { color: #ef5350; }
 
         .logo-img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 1.5rem; display: block; }
     </style>
@@ -47,12 +48,12 @@
         </div>
         
         <div id="chatBody" class="chat-body">
-            <div class="bubble bot">Système Kaleidoland opérationnel. Comment puis-je servir vos intérêts stratégiques ou territoriaux aujourd'hui ?</div>
+            <!-- Chat bubbles will be dynamically inserted here -->
         </div>
 
         <div class="p-4 bg-black/60 flex gap-2">
             <input type="text" id="userInput" placeholder="Entrez une commande..." class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs flex-1 outline-none focus:border-pink-500 transition-colors">
-            <button onclick="sendMessage()" class="bg-pink-600 p-2 rounded-xl hover:bg-pink-500 transition-all">
+            <button id="sendBtn" class="bg-pink-600 p-2 rounded-xl hover:bg-pink-500 transition-all">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
         </div>
@@ -62,17 +63,39 @@
         const API_KEY = "insert";
         const MODEL_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
+        // Helper function to create a bubble element safely
+        function createBubble(text, isBotMessage, isError = false) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble ' + (isBotMessage ? 'bot' : 'user') + (isError ? ' error' : '');
+            // Use textContent to safely render text without interpreting HTML
+            bubble.textContent = text;
+            return bubble;
+        }
+
+        // Helper function to append bubble to chat
+        function appendBubbleToChat(bubble) {
+            const chatBody = document.getElementById('chatBody');
+            chatBody.appendChild(bubble);
+            // Auto-scroll to bottom
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
         async function sendMessage() {
             const input = document.getElementById('userInput');
-            const chat = document.getElementById('chatBody');
-            const text = input.value;
-            if(!text) return;
+            const text = input.value.trim();
+            
+            // Validate input
+            if (!text) return;
 
-            chat.innerHTML += `<div class="bubble user">${text}</div>`;
+            // Add user message bubble
+            const userBubble = createBubble(text, false);
+            appendBubbleToChat(userBubble);
+            
+            // Clear input
             input.value = "";
-            chat.scrollTop = chat.scrollHeight;
 
             try {
+                // Validate response status
                 const response = await fetch(MODEL_URL, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -80,19 +103,44 @@
                         contents: [{ parts: [{ text: text }] }]
                     })
                 });
+
+                // Check for HTTP errors
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                }
+
                 const data = await response.json();
-                const reply = data.candidates[0].content.parts[0].text;
                 
-                chat.innerHTML += `<div class="bubble bot">${reply}</div>`;
-                chat.scrollTop = chat.scrollHeight;
+                // Safely access nested response
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                    const reply = data.candidates[0].content.parts[0].text;
+                    const botBubble = createBubble(reply, true);
+                    appendBubbleToChat(botBubble);
+                } else {
+                    throw new Error('Unexpected API response format');
+                }
             } catch (e) {
-                chat.innerHTML += `<div class="bubble bot text-red-500">Erreur de liaison. Vérifiez votre clé API.</div>`;
+                // Use generic error message to avoid information disclosure
+                console.error('Message error:', e);
+                const errorBubble = createBubble('Erreur de liaison. Vérifiez votre clé API.', true, true);
+                appendBubbleToChat(errorBubble);
             }
         }
 
+        // Attach event listeners
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
         document.getElementById('userInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
+
+        // Initialize: Add welcome message
+        function initializeChat() {
+            const welcomeText = 'Système Kaleidoland opérationnel. Comment puis-je servir vos intérêts stratégiques ou territoriaux aujourd\'hui ?';
+            const welcomeBubble = createBubble(welcomeText, true);
+            document.getElementById('chatBody').appendChild(welcomeBubble);
+        }
+
+        initializeChat();
     </script>
 </body>
 </html>
