@@ -1,0 +1,174 @@
+{
+  "entities": {
+    "Message": {
+      "title": "Message",
+      "description": "A message in the Synode chat",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string", "description": "The message content" },
+        "sender": { "type": "string", "enum": ["user", "synode"], "description": "Who sent the message" },
+        "timestamp": { "type": "integer", "description": "When the message was sent" },
+        "uid": { "type": "string", "description": "The user's ID (if sender is user)" },
+        "data": {
+          "type": "object",
+          "properties": {
+            "entropy_score": { "type": "number" },
+            "theme": { "type": "string", "enum": ["LANA_HEIGHT", "GOLD_RESERVE", "BLOOD_ALERTE", "NEUTRAL", "LANA_ZEN_DEEP"] },
+            "shadow_update": { "type": "string" },
+            "liquidator_report": {
+              "type": "object",
+              "properties": {
+                "score": { "type": "integer" },
+                "flaw": { "type": "string" },
+                "sandwich_critique": { "type": "string" }
+              }
+            },
+            "future_impact": {
+              "type": "object",
+              "properties": {
+                "scalability": { "type": "number" },
+                "burnout_risk": { "type": "number" }
+              }
+            },
+            "gravity_check": {
+              "type": "object",
+              "properties": {
+                "rarity_score": { "type": "number" },
+                "market_saturation": { "type": "number" },
+                "verdict": { "type": "string" }
+              }
+            },
+            "flow_action": {
+              "type": "object",
+              "properties": {
+                "task": { "type": "string" },
+                "status": { "type": "string", "enum": ["EXECUTING", "PENDING"] }
+              }
+            },
+            "sensory_status": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "string", "enum": ["RED", "GOLD", "NEUTRAL"] },
+                "friction_coefficient": { "type": "number" }
+              }
+            },
+            "action_buttons": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string" },
+                  "cmd": { "type": "string" }
+                }
+              }
+            }
+          },
+          "description": "UI mutation data from the Synode"
+        },
+        "insee_pillar": { "type": "string", "enum": ["STRATEGY", "CREATION", "ENGINEERING", "WRITING", "GRAVITY", "FLOW", "SENSORY"], "description": "The detected pillar" }
+      },
+      "required": ["text", "sender", "timestamp"]
+    },
+    "KnowledgeNugget": {
+      "title": "KnowledgeNugget",
+      "description": "A synthesized piece of strategic knowledge",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string", "description": "The synthesized knowledge nugget" },
+        "category": { "type": "string", "description": "The category of the nugget (Business, Strategic, Personal, etc.)" },
+        "weight": { "type": "number", "description": "Importance weight (0-1)" },
+        "timestamp": { "type": "integer", "description": "When the nugget was created" }
+      },
+      "required": ["content", "category", "weight", "timestamp"]
+    },
+    "SemanticCluster": {
+      "title": "SemanticCluster",
+      "description": "A generated semantic cluster for SEO authority",
+      "type": "object",
+      "properties": {
+        "pillar": { "type": "string", "description": "The main concept" },
+        "depth": { "type": "integer", "description": "Silo depth" },
+        "subClusters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "weight": { "type": "integer" },
+              "links": { "type": "integer" }
+            },
+            "required": ["title", "weight", "links"]
+          }
+        },
+        "authorityScore": { "type": "integer" },
+        "potentialReach": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "uid": { "type": "string" }
+      },
+      "required": ["pillar", "depth", "subClusters", "authorityScore", "potentialReach", "timestamp", "uid"]
+    },
+    "User": {
+      "title": "User",
+      "description": "A member of the Synode",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "accessLevel": { "type": "string", "enum": ["VISITOR", "MEMBER", "ELITE"] },
+        "engagementScore": { "type": "number" },
+        "lastLogin": { "type": "integer" }
+      },
+      "required": ["uid", "email", "accessLevel"]
+    },
+    "Prospect": {
+      "title": "Prospect",
+      "description": "A high-ticket target identified by the crawler",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "signal": { "type": "string" },
+        "profitPotential": { "type": "number" },
+        "status": { "type": "string", "enum": ["NEW_OPPORTUNITY", "CONTACTED", "CONVERTED", "LIQUIDATED"] },
+        "linkedinId": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      },
+      "required": ["name", "signal", "profitPotential", "status", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/artifacts/kaleidoland-synode/admin/data/prospects": {
+      "schema": "Prospect",
+      "description": "Private collection of high-ticket prospects"
+    },
+    "/artifacts/kaleidoland-synode/public/data/users": {
+      "schema": "User",
+      "description": "Collection of Synode members"
+    },
+    "/artifacts/kaleidoland-synode/public/data/messages": {
+      "schema": "Message",
+      "description": "Collection of chat messages"
+    },
+    "/artifacts/kaleidoland-synode/public/data/knowledge_nuggets": {
+      "schema": "KnowledgeNugget",
+      "description": "Collection of synthesized knowledge nuggets"
+    },
+    "/artifacts/kaleidoland-synode/public/data/semantic_clusters": {
+      "schema": "SemanticCluster",
+      "description": "Collection of generated semantic clusters"
+    },
+    "/analytics": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "actionId": { "type": "string" },
+          "pillar": { "type": "string" },
+          "timestamp": { "type": "integer" },
+          "screenRes": { "type": "string" }
+        },
+        "required": ["actionId", "pillar", "timestamp", "screenRes"]
+      },
+      "description": "Heatmap analytics for button interactions"
+    }
+  }
+}
