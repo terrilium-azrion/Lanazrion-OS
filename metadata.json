@@ -1,0 +1,5 @@
+{
+  "name": "KALEIDOLAND SYNODE [SYMBIOSIS_ALPHA]",
+  "description": "Extension cognitive de Kaleidoland. Une intelligence industrielle et visionnaire pilotant l'immersion VR à Lille via des mutations JSON dynamiques.",
+  "requestFramePermissions": ["microphone", "geolocation"]
+}
