@@ -1,0 +1,112 @@
+{
+  "Project": "KALEIDOLAND V1.0",
+  "Version": "1.0.0",
+  "Architect": "Lanazrion Hub System",
+  "DOM_Hierarchy": [
+    {
+      "Element": "Navigation (Header)",
+      "Tag": "header.nav-airy",
+      "Z_Index": 100,
+      "Position": "fixed",
+      "Collision_Logic": "Top-docked, backdrop-filter prevents content bleed-through."
+    },
+    {
+      "Element": "Hero Section",
+      "Tag": "section.hero-symbiose",
+      "Z_Index": 10,
+      "Position": "relative",
+      "Collision_Logic": "Grid-based separation (1fr 1.2fr) ensures visual/text isolation."
+    },
+    {
+      "Element": "Expertise Grid",
+      "Tag": "div.bento-airy",
+      "Z_Index": 20,
+      "Position": "relative",
+      "Collision_Logic": "CSS Grid with 12-column span logic prevents card overlapping."
+    },
+    {
+      "Element": "Floating CTA (Lancer)",
+      "Tag": "button.btn-lancer-float",
+      "Z_Index": 50,
+      "Position": "fixed",
+      "Collision_Logic": "Bottom-right offset (right: 32, bottom: 10) to avoid mascot collision."
+    },
+    {
+      "Element": "Chatbot Mascot",
+      "Tag": "div.lanazrion-avatar",
+      "Z_Index": 50,
+      "Position": "fixed",
+      "Collision_Logic": "Bottom-right anchor (right: 8, bottom: 8)."
+    },
+    {
+      "Element": "Chat Window Overlay",
+      "Tag": "motion.div (Chat Window)",
+      "Z_Index": 1000,
+      "Position": "fixed",
+      "Collision_Logic": "Highest priority, covers bottom-right corner when active."
+    }
+  ],
+  "CSS_Architecture": {
+    "Grid_System": {
+      "Columns": 12,
+      "Gap": "2rem",
+      "Mobile_Logic": "Stacked (12 spans), no horizontal overflow.",
+      "Desktop_Logic": "4-span items (3 per row) or 8-span large cards."
+    },
+    "Glassmorphism_Specs": {
+      "Background": "rgba(255, 255, 255, 0.7)",
+      "Backdrop_Blur": "15px",
+      "Border": "1px solid rgba(255, 255, 255, 0.2)",
+      "Border_Radius": "40px (Premium) / 24px (Standard)",
+      "Shadow": "0 25px 50px -12px rgba(25, 25, 112, 0.25)"
+    },
+    "Typography": {
+      "Primary_Font": "Plus Jakarta Sans",
+      "Secondary_Font": "Nunito Rounded",
+      "Hierarchy": {
+        "H1": "6.5rem, Weight 800, Letter-spacing -0.04em (Massive)",
+        "H2": "2rem, Weight 900, Uppercase (Bento Titles)",
+        "H3": "1.25rem, Weight 600 (Subtitles/Captions)"
+      }
+    }
+  },
+  "Chatbot_Logic": {
+    "Identity": "Lanazrion la Gardienne (Warmth of Lana + Precision of Azrion)",
+    "State_Management": {
+      "Open_Close": "React useState (isChatOpen) with Framer Motion AnimatePresence",
+      "Learning_Storage": "Logs array filtered by source 'TERMINAL', persistent during session.",
+      "Context_Awareness": "Tracks active pole (CERVEAU, COEUR, MUSCLE) to tailor responses."
+    },
+    "Conversational_Flow": {
+      "Welcome_Script": "Miaou ! Oh, quel plaisir de vous voir à Kaleidoland ! ✨🐾 Ici, on fait grandir vos projets dans la sérénité...",
+      "Conversion_Buttons": [
+        {
+          "Label": "Cerveau (Stratégie)",
+          "Trigger": "INIT_MISSION --pole CERVEAU"
+        },
+        {
+          "Label": "Cœur (Design)",
+          "Trigger": "INIT_MISSION --pole COEUR"
+        },
+        {
+          "Label": "Muscle (Tech)",
+          "Trigger": "INIT_MISSION --pole MUSCLE"
+        }
+      ]
+    }
+  },
+  "Conversion_Path": {
+    "Step_1": "User engages with Lanazrion (Chatbot) to define project éclat.",
+    "Step_2": "Lanazrion validates vision and identifies technical/strategic needs.",
+    "Step_3": "Proactive CTA: Suggests PDF Manifest or RDV in Dashboard.",
+    "Step_4": "Final Push: Direct link to 'LANCER' (Synode Dashboard) for full audit activation."
+  },
+  "Performance_Metrics": {
+    "Estimated_Weight": "< 1.5MB (Optimized assets, no heavy libraries)",
+    "Responsive_Breakpoints": {
+      "Mobile": "< 640px (Stacked elements, hidden nav-links)",
+      "Tablet": "640px - 1024px (2-column grids)",
+      "Desktop": "> 1024px (Full Airy structure, 3-column bento)"
+    }
+  }
+}
