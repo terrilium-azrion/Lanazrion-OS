@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: /artifacts/kaleidoland-synode/public/data/messages
+    // Document ID: auto-generated
+    // Fields:
+    //   - text: string (required) - The message content
+    //   - sender: string (required, enum: ["user", "synode"]) - Who sent the message
+    //   - timestamp: int (required) - When the message was sent
+    //   - uid: string (optional) - The user's ID
+    //   - data: map (optional) - UI mutation data
+    //   - intent: string (optional, enum: ["CONVERSION", "INFO", "SUPPORT"]) - The detected intent
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "clementulco@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidMessage(data) {
+      return data.keys().hasAll(['text', 'sender', 'timestamp']) &&
+             data.text is string && data.text.size() < 1000 &&
+             data.sender in ['user', 'synode'] &&
+             data.timestamp is int;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    // Les messages sont en lecture seule pour les utilisateurs (Historique)
+    // Mais l'écriture est bridée pour éviter le spam
+    match /artifacts/kaleidoland-synode/public/data/messages/{messageId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() 
+                    && request.resource.data.text.size() < 1000;
+      allow update, delete: if false; // Immuabilité des logs (Audit Trail)
+    }
+
+    // Banque de Connaissances : Lecture pour tous les authentifiés, écriture pour tous (Système)
+    match /artifacts/kaleidoland-synode/public/data/knowledge_nuggets/{nuggetId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAuthenticated();
+    }
+
+    // Clusters Sémantiques : Lecture et écriture pour les authentifiés (Propriété via UID)
+    match /artifacts/kaleidoland-synode/public/data/semantic_clusters/{clusterId} {
+      allow read: if isAuthenticated() && (request.auth.uid == resource.data.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.uid == request.auth.uid;
+    }
+    
+    // Zone Analytics : Seul le système écrit, seul l'Admin lit
+    match /analytics/{docId} {
+      allow read: if isAdmin();
+      allow write: if isAuthenticated();
+    }
+
+    // Synode Members
+    match /artifacts/kaleidoland-synode/public/data/users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Admin Prospect Hunter
+    match /artifacts/kaleidoland-synode/admin/data/prospects/{prospectId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+}
