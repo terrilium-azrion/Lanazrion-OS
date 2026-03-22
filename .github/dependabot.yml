@@ -1,0 +1,30 @@
+# [SOP_DEPENDABOT_VANTABLACK]
+# Surveillance automatique des dépendances pour Lanazrion-OS
+version: 2
+updates:
+  # 1. Surveillance des GitHub Actions (Sécurité du déploiement)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    labels:
+      - "security"
+      - "automation"
+
+  # 2. Surveillance des packages npm (si on passe sur un framework type Vite/Next)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "fix"
+      include: "scope"
+
+  # 3. Surveillance de l'écosystème Docker (si on conteneurise la Terrilium App)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
