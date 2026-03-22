@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic | KALEIDOLAND</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="bg-prisme"></div>
+
+    <header style="padding: 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" class="logo" style="font-family: 'Nunito Rounded'; font-size: 1.5rem; color: var(--p-blue); font-weight: 900; text-decoration: none;">KALEIDOLAND</a>
+        <nav style="display: flex; align-items: center; gap: 20px;">
+            <button id="theme-toggle" class="theme-btn">
+                <span id="theme-icon">🌙</span>
+            </button>
+            <a href="login.html" class="subtle-link" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">Login</a>
+            <a href="/" class="subtle-link" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;">Retour</a>
+        </nav>
+    </header>
+
+    <main style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+        <section class="diagnostic-intro">
+            <h1 class="rainbow-text" style="margin-bottom: 20px;">L'Éveil de votre Projet</h1>
+            <p class="subtitle" style="max-width: 700px; margin: 0 auto 40px;">
+                Chaque idée est une lumière blanche. Notre rôle est de la faire passer à travers le prisme Kaleidoland pour révéler ses couleurs cachées. Le Diagnostic IST mesure la viabilité, l'impact et la force de votre vision.
+            </p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-number">01</span>
+                    <h3>Exploration</h3>
+                    <p>Lanazrion analyse votre secteur, vos blocages et votre potentiel inexploité.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">02</span>
+                    <h3>Analyse Spectrale</h3>
+                    <p>Nous passons votre idée au crible de nos 3 indicateurs : Stratégie, Création, Tech.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">03</span>
+                    <h3>Réverbération</h3>
+                    <p>Vous recevez votre score IST et une recommandation personnalisée (Catalyseur ou Oracle).</p>
+                </div>
+            </div>
+
+            <table class="pillars-table">
+                <thead>
+                    <tr>
+                        <th>Pilier</th>
+                        <th>Ce que nous mesurons</th>
+                        <th>Résultat pour vous</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pillar-row">
+                        <td><span class="pillar-icon">🧠</span> Cerveau (Stratégie)</td>
+                        <td>La cohérence de votre business model et l'architecture de votre projet.</td>
+                        <td>Une feuille de route claire et des priorités définies.</td>
+                    </tr>
+                    <tr class="pillar-row">
+                        <td><span class="pillar-icon">💖</span> Cœur (Impact)</td>
+                        <td>Votre capacité à toucher votre audience, l'éthique et l'esthétique du projet.</td>
+                        <td>Une identité forte qui génère de l'émotion et de la confiance.</td>
+                    </tr>
+                    <tr class="pillar-row">
+                        <td><span class="pillar-icon">💪</span> Muscle (Technique)</td>
+                        <td>Votre niveau d'automatisation et l'efficacité de vos outils numériques.</td>
+                        <td>Un système qui travaille pour vous, et non l'inverse.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button class="g-btn" style="font-size: 1.2rem; padding: 15px 40px;" onclick="document.getElementById('funnel-section').scrollIntoView({behavior: 'smooth'})">Commencer l'Éveil</button>
+        </section>
+
+        <section id="funnel-section" class="funnel-container" style="padding-top: 100px; margin-bottom: 100px;">
+            <h2 style="text-align: center; color: var(--p-purple); margin-bottom: 2rem; font-size: 2.5rem;">Diagnostic Prismatique</h2>
+            
+            <div id="funnel-steps">
+                <!-- Questions will be injected here -->
+            </div>
+
+            <div id="results-step" class="question-step" style="text-align: center;">
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">Analyse Complète</h3>
+                <div id="score-display" style="font-size: 4rem; font-weight: 900; color: var(--p-blue); margin-bottom: 1rem;">0</div>
+                <p id="recommendation-text" style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;"></p>
+                
+                <div id="lead-form" style="margin-top: 2rem;">
+                    <input type="email" id="lead-email" placeholder="Votre email pour le rapport complet" style="width: 100%; padding: 1rem; border-radius: 9999px; border: 1px solid var(--p-blue); background: var(--glass-bg); color: var(--text-color); margin-bottom: 1rem; text-align: center; outline: none;">
+                    <button class="g-btn" style="width: 100%;" onclick="DiagnosticUI.saveLead()">Recevoir le Rapport</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { Calculator } from './calculator.js';
+        import { Database } from './database.js';
+
+        const DiagnosticUI = {
+            currentStep: 0,
+            answers: [],
+            results: null,
+
+            init() {
+                this.renderQuestions();
+                this.showStep(0);
+            },
+
+            renderQuestions() {
+                const container = document.getElementById('funnel-steps');
+                Calculator.questions.forEach((q, index) => {
+                    const step = document.createElement('div');
+                    step.className = `question-step step-${index}`;
+                    step.innerHTML = `
+                        <h3 style="font-size: 1.5rem; margin-bottom: 2rem; text-align: center;">${q.text}</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            ${q.options.map((opt, optIndex) => `
+                                <button class="g-btn" style="width: 100%;" onclick="DiagnosticUI.selectOption(${index}, ${optIndex})">${opt.text}</button>
+                            `).join('')}
+                        </div>
+                    `;
+                    container.appendChild(step);
+                });
+            },
+
+            showStep(index) {
+                document.querySelectorAll('.question-step').forEach(s => s.classList.remove('active'));
+                const step = document.querySelector(`.step-${index}`);
+                if (step) {
+                    step.classList.add('active');
+                } else {
+                    this.showResults();
+                }
+            },
+
+            selectOption(qIndex, optIndex) {
+                const question = Calculator.questions[qIndex];
+                const option = question.options[optIndex];
+                this.answers.push(option);
+                this.currentStep++;
+                this.showStep(this.currentStep);
+            },
+
+            showResults() {
+                this.results = Calculator.calculateScore(this.answers);
+                // Save to sessionStorage for Lanazrion Bridge
+                sessionStorage.setItem('kaleidoland_results', JSON.stringify(this.results));
+                sessionStorage.setItem('KLD_diag', this.results.total);
+                
+                document.getElementById('results-step').classList.add('active');
+                document.getElementById('score-display').textContent = this.results.total;
+                document.getElementById('recommendation-text').textContent = Calculator.getRecommendation(this.results);
+            },
+
+            async saveLead() {
+                const email = document.getElementById('lead-email').value;
+                if (!email) return alert('Veuillez entrer un email.');
+                
+                try {
+                    await Database.saveLead(email, this.results.total, this.results);
+                    alert('Merci ! Votre rapport est en route.');
+                    window.location.href = '/';
+                } catch (error) {
+                    console.error('Save lead error:', error);
+                }
+            }
+        };
+
+        window.DiagnosticUI = DiagnosticUI;
+        DiagnosticUI.init();
+    </script>
+    <script type="module" src="/master.js"></script>
+</body>
+</html>
