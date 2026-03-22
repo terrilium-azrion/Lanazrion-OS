@@ -5,38 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LANAZRION | Kaleidoland OS</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root { --k-pink: #E91E63; --k-purple: #9C27B0; --k-blue: #2196F3; }
-        body { background-color: #020202; font-family: 'Inter', sans-serif; color: #ffffff; }
-        .hero-gradient { background: radial-gradient(circle at 20% 30%, rgba(233, 30, 99, 0.05) 0%, transparent 40%), #020202; }
-        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        body { background-color: #020202; font-family: 'Inter', sans-serif; color: #ffffff; margin: 0; overflow: hidden; }
+        
+        .hero-gradient { 
+            background: radial-gradient(circle at 20% 30%, rgba(233, 30, 99, 0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.1) 0%, transparent 40%),
+                        #020202; 
+        }
+
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .chat-widget { position: fixed; bottom: 30px; right: 30px; width: 380px; border-radius: 1.5rem; overflow: hidden; z-index: 50; }
-        .chat-body { background: #050505; height: 400px; padding: 1.25rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
-        .bubble { padding: 0.75rem 1rem; border-radius: 1rem; font-size: 13px; max-width: 85%; }
-        .bubble.bot { background: rgba(156, 39, 176, 0.1); border: 1px solid rgba(156, 39, 176, 0.2); align-self: flex-start; }
-        .bubble.user { background: rgba(255, 255, 255, 0.05); align-self: flex-end; border-bottom-right-radius: 0.2rem; }
+        .chat-body { background: rgba(5, 5, 5, 0.85); height: 450px; padding: 1.25rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
+        
+        /* Scrollbar minimalist */
+        .chat-body::-webkit-scrollbar { width: 4px; }
+        .chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+        .bubble { padding: 0.85rem 1.1rem; border-radius: 1.2rem; font-size: 13px; max-width: 85%; line-height: 1.5; }
+        .bubble.bot { background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(33, 150, 243, 0.2)); border: 1px solid rgba(255, 255, 255, 0.1); align-self: flex-start; border-bottom-left-radius: 0.2rem; }
+        .bubble.user { background: rgba(255, 255, 255, 0.08); align-self: flex-end; border-bottom-right-radius: 0.2rem; border: 1px solid rgba(255, 255, 255, 0.05); }
+
+        .logo-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 1.5rem; display: block; }
     </style>
 </head>
 <body class="hero-gradient min-h-screen flex items-center justify-center">
 
     <div class="text-center">
-        <img src="Kaleidoland logo.jpg" alt="Logo" class="w-24 h-24 rounded-full mx-auto mb-6 border-2 border-pink-500 shadow-2xl shadow-pink-500/20">
-        <h1 class="text-5xl font-black italic tracking-tighter uppercase mb-2">LANAZRION_OS</h1>
-        <p class="text-neutral-500 mono text-xs tracking-[0.5em]">System Ready | API Active</p>
+        <img src="Kaleidoland%20logo.png" alt="Lanazrion Logo" class="logo-img shadow-2xl">
+        <h1 class="text-6xl font-black italic tracking-tighter uppercase mb-2">LANAZRION_OS</h1>
+        <p class="text-neutral-500 font-mono text-[10px] tracking-[0.6em] uppercase">Hémisphère Droit | Actif</p>
     </div>
 
     <div class="chat-widget glass-card shadow-2xl">
-        <div class="p-4 border-bottom border-white/5 bg-black/40 flex items-center gap-3">
-            <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-            <span class="text-[10px] font-black uppercase tracking-widest text-pink-500">Lanazrion_AI v1.0</span>
+        <div class="p-4 border-b border-white/5 bg-black/40 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+                <span class="text-[10px] font-black uppercase tracking-widest text-pink-500">Lanazrion_AI v1.1</span>
+            </div>
         </div>
         
         <div id="chatBody" class="chat-body">
-            <div class="bubble bot">Système initialisé. Je suis prêt à traiter vos données territoriales et stratégiques. Quel est l'objectif ?</div>
+            <div class="bubble bot">Système Kaleidoland opérationnel. Comment puis-je servir vos intérêts stratégiques ou territoriaux aujourd'hui ?</div>
         </div>
 
         <div class="p-4 bg-black/60 flex gap-2">
-            <input type="text" id="userInput" placeholder="Commande..." class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs flex-1 outline-none focus:border-pink-500 transition-colors">
+            <input type="text" id="userInput" placeholder="Entrez une commande..." class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs flex-1 outline-none focus:border-pink-500 transition-colors">
             <button onclick="sendMessage()" class="bg-pink-600 p-2 rounded-xl hover:bg-pink-500 transition-all">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
@@ -53,7 +69,6 @@
             const text = input.value;
             if(!text) return;
 
-            // Affichage User
             chat.innerHTML += `<div class="bubble user">${text}</div>`;
             input.value = "";
             chat.scrollTop = chat.scrollHeight;
@@ -69,13 +84,17 @@
                 const data = await response.json();
                 const reply = data.candidates[0].content.parts[0].text;
                 
-                // Affichage AI
                 chat.innerHTML += `<div class="bubble bot">${reply}</div>`;
                 chat.scrollTop = chat.scrollHeight;
             } catch (e) {
-                chat.innerHTML += `<div class="bubble bot text-red-500">Erreur de liaison API. Vérifiez les quotas AI Studio.</div>`;
+                chat.innerHTML += `<div class="bubble bot text-red-500">Erreur de liaison. Vérifiez votre clé API.</div>`;
             }
         }
+
+        // Touche Entrée
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
     </script>
 </body>
 </html>
