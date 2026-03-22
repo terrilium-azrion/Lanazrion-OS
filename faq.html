@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | KALEIDOLAND</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito+Rounded:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="sidebar-links">
+        <a href="/login.html">👤 Espace Compte</a>
+        <a href="/pricing.html">💳 Tarifs</a>
+        <a href="/faq.html">❓ FAQ</a>
+        <a href="/ethique.html">⚖️ IA Éthique</a>
+        <a href="/rgpd.html">🔒 RGPD</a>
+        <a href="/legals.html">📄 Mentions Légales</a>
+      </div>
+    </div>
+
+    <button class="openbtn" onclick="openNav()">☰ Menu</button>
+
+    <nav class="glass-nav">
+        <div class="container">
+            <a href="/" style="text-decoration: none;"><img src="Kaleidoland logo.png" alt="Logo" class="logo-img" style="filter: saturate(0.8);"></a>
+            <div class="nav-links">
+                <a href="/#univers">Univers</a>
+                <a href="login.html">Login</a>
+                <a href="diagnostic.html" class="cta-pastel">Diagnostic IST</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding: 150px 5% 50px; max-width: 900px; margin: 0 auto;">
+        <h1>Réassurance Client & FAQ</h1>
+        <div class="bento-item" style="background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius); padding: 40px; backdrop-filter: blur(10px);">
+            <div style="margin-bottom: 40px;">
+                <h3 style="color: var(--pastel-purple);">Q : Est-ce que mes données sont utilisées pour entraîner l'IA ?</h3>
+                <p><strong>R : Jamais.</strong> Vos données restent votre propriété exclusive dans un silo sécurisé. Nous utilisons des instances privées pour garantir la confidentialité totale de vos actifs stratégiques.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--pastel-blue);">Q : Faut-il être un expert en informatique ?</h3>
+                <p><strong>R : Non.</strong> Le "Muscle" de Kaleidoland s'occupe de la technique. Vous gardez le pilotage stratégique et créatif. Notre rôle est de rendre la complexité invisible.</p>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="master.js"></script>
+</body>
+</html>
