@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+# Ne pas indexer les scripts du cerveau (Propriété Intellectuelle)
+Disallow: /js/ml-core/
+Disallow: /admin/
+# Ne pas indexer les pages de succès de paiement (Doublons SEO)
+Disallow: /success-payment
+Disallow: /cancel-payment
+
+# Lien vers le sitemap pour faciliter le travail de Google
+Sitemap: https://www.kaleidoland.fr/sitemap.xml
