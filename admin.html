@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | KALEIDOLAND</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="bg-prisme"></div>
+
+    <header style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gold-leaf);">
+        <a href="/" class="logo" style="font-family: var(--font-synode); font-size: 1.5rem; color: var(--gold-leaf); font-weight: 900; text-decoration: none;">KALEIDOLAND ADMIN</a>
+        <nav>
+            <button id="logout-btn" class="btn-gold" style="padding: 0.5rem 1.5rem; font-size: 0.8rem;" onclick="auth.signOut()">Déconnexion</button>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Leads</h4>
+                <div id="total-leads" class="value">0</div>
+            </div>
+            <div id="mrr-card" class="stat-card">
+                <h4>MRR Estimé</h4>
+                <div id="total-mrr" class="value">0 €</div>
+            </div>
+            <div class="stat-card">
+                <h4>Demandes de Devis</h4>
+                <div id="total-quotes" class="value">0</div>
+            </div>
+        </div>
+
+        <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="bento-card" style="cursor: default;">
+                <h3>Leads Récents</h3>
+                <div id="leads-list" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Leads will be injected here -->
+                </div>
+            </div>
+            <div class="bento-card" style="cursor: default;">
+                <h3>Demandes de Devis</h3>
+                <div id="quotes-list" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Quotes will be injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/admin.js"></script>
+    <script type="module" src="/master.js"></script>
+</body>
+</html>
