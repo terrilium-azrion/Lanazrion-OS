@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarifs | KALEIDOLAND</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito+Rounded:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="sidebar-links">
+        <a href="/login.html">👤 Espace Compte</a>
+        <a href="/pricing.html">💳 Tarifs</a>
+        <a href="/faq.html">❓ FAQ</a>
+        <a href="/ethique.html">⚖️ IA Éthique</a>
+        <a href="/rgpd.html">🔒 RGPD</a>
+        <a href="/legals.html">📄 Mentions Légales</a>
+      </div>
+    </div>
+
+    <button class="openbtn" onclick="openNav()">☰ Menu</button>
+
+    <nav class="glass-nav">
+        <div class="container">
+            <a href="/" style="text-decoration: none;"><img src="Kaleidoland logo.png" alt="Logo" class="logo-img" style="filter: saturate(0.8);"></a>
+            <div class="nav-links">
+                <a href="/#univers">Univers</a>
+                <a href="login.html">Login</a>
+                <a href="diagnostic.html" class="cta-pastel">Diagnostic IST</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <h1 style="text-align: center; font-size: 3rem; margin-bottom: 20px;">Nos Offres Symbiotiques</h1>
+        <p style="text-align: center; opacity: 0.8; max-width: 600px; margin: 0 auto 40px;">Choisissez le niveau d'accompagnement adapté à votre ambition territoriale.</p>
+
+        <section class="pricing-grid">
+            <div class="pricing-card">
+                <span class="badge">Gratuit</span>
+                <h3>L'Explorateur</h3>
+                <div class="price">0€<span>/mois</span></div>
+                <ul>
+                    <li>✅ Diagnostic IST Illimité</li>
+                    <li>✅ Accès FAQ & IA Éthique</li>
+                    <li>✅ Lanazrion (Base)</li>
+                </ul>
+                <a href="diagnostic.html" class="cta-pastel">Commencer</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <span class="badge" style="background: var(--pastel-blue); color: #121212;">Populaire</span>
+                <h3>Le Catalyseur</h3>
+                <div class="price">42€<span>/mois</span></div>
+                <ul>
+                    <li>✅ Tous les outils Terrilium App</li>
+                    <li>✅ Formation IA Mensuelle</li>
+                    <li>✅ Support "Le Muscle" (Prioritaire)</li>
+                </ul>
+                <a href="mailto:clementulco@gmail.com?subject=Inscription Catalyseur" class="cta-pastel">S'abonner</a>
+            </div>
+
+            <div class="pricing-card">
+                <span class="badge" style="background: var(--pastel-purple); color: #121212;">Expert</span>
+                <h3>L'Oracle</h3>
+                <div class="price">Sur Devis<span>(High-Ticket)</span></div>
+                <ul>
+                    <li>✅ Accompagnement "Le Cerveau"</li>
+                    <li>✅ Création de Contenu "Le Cœur"</li>
+                    <li>✅ Stratégie Territoriale sur-mesure</li>
+                </ul>
+                <a href="mailto:clementulco@gmail.com?subject=Demande Oracle" class="cta-pastel">Prendre rendez-vous</a>
+            </div>
+        </section>
+
+        <div class="enterprise-banner">
+            <h3>🏢 Besoin d'un déploiement à grande échelle ?</h3>
+            <p>Collectivités, Grands Groupes, Institutions : contactez-nous pour une solution sur-mesure.</p>
+            <a href="mailto:clementulco@gmail.com?subject=Contact Enterprise" class="cta-plain">Contacter l'équipe</a>
+        </div>
+    </main>
+
+    <script type="module" src="master.js"></script>
+</body>
+</html>
